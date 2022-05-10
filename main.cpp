@@ -42,13 +42,6 @@ void    fillet(void)
     rectangleFill((DIMW / 2) - 5, 0, (DIMW / 2) + 5, DIMV / 2.5);
 }
 
-//  setWall sera une fonction me permettant d'ajouter des murs dans les 4 coins de la fenêtre de manière efficace et ainsi qu'au fillet.
-void   setWall(int minx, int miny, int maxx, int maxy)
-{
-    color(0,0,0);
-    rectangleFill((DIMW / 2) - 5, 0, (DIMW / 2) + 5, 200);
-}
-
 // Structure de la balle
 struct Ball
 {
@@ -96,6 +89,7 @@ void update(Ball &b, Player &p1, Player &p2)
     if (isKeyPressed('s') || isKeyPressed('f') || isKeyPressed('e') || isKeyPressed('k') || isKeyPressed('m') || isKeyPressed('o'))
       while(b.c.y > 25)
         b.c.y-=d;
+      
 
 //Initialise la forme et couleur des joueurs
       color(255,0,0);
@@ -140,15 +134,21 @@ void update(Ball &b, Player &p1, Player &p2)
   // Contrôles des deux joueurs pour sauter
     if (isKeyPressed('e') || isKeyPressed('o'))
     {
-      if (isKeyPressed('e') && p1.c.x < DIMV - 25)
+      if (isKeyPressed('e') && p1.c.x < DIMW - 25 && p1.c.y == 25)
       {
-        p1.c.y += 2.f*d;
-        p1.c.y -= d;
+        p1.c.y += 20.f*d;
       }
-      if (isKeyPressed('o') && p2.c.x < DIMV - 25)
+      else if(p1.c.y != 25)
       {
-        p2.c.y += 2.f*d;
-        p2.c.y-= d;
+        p1.c.y -= 20*d;
+      }
+      if (isKeyPressed('o') && p2.c.x < DIMW - 25 && p2.c.y == 25)
+      {
+        p2.c.y += 20.f*d;
+      }
+      else if (p2.c.y != 25)
+      {
+        p2.c.y-= 20*d;
       }
       color(255,0,0);
       drawPlayers(p1);
