@@ -85,17 +85,25 @@ void drawPlayers(Player &p)
 // upadate mets à jour la position de la balle et si celle-ci touche le sol, elle retourne à son emplacement de départ
 void update(Ball &b, Player &p1, Player &p2)
 {
+  float pos;
   // fait tomber la balle au commencement d'une partie (dès qu'une touche de controle est actionnée)
     if (isKeyPressed('s') || isKeyPressed('f') || isKeyPressed('e') || isKeyPressed('k') || isKeyPressed('m') || isKeyPressed('o'))
       while(b.c.y > 25)
-        b.c.y-=d;
-      
+        {
+          b.c.y-=d;
+        }
+      if (b.c.y <= 26)
+          {
+            initBall(b);
+          }
 
 //Initialise la forme et couleur des joueurs
       color(255,0,0);
       drawPlayers(p1);
       color(0,255,0);
       drawPlayers(p2);
+      color(255,255,255);
+      drawBall(b);
   
 // Contrôles des deux joueurs pour aller à gauche
     if (isKeyPressed('s') || isKeyPressed('k'))
@@ -108,10 +116,13 @@ void update(Ball &b, Player &p1, Player &p2)
       {
         p2.c.x-=5;
       }
+      
       color(255,0,0);
       drawPlayers(p1);
       color(0,255,0);
       drawPlayers(p2);
+      color(255,255,255);
+      drawBall(b);
     }
 
   // Contrôles des deux joueurs pour aller à droite
@@ -129,6 +140,8 @@ void update(Ball &b, Player &p1, Player &p2)
       drawPlayers(p1);
       color(0,255,0);
       drawPlayers(p2);
+      color(255,255,255);
+      drawBall(b);
     }
 
   // Contrôles des deux joueurs pour sauter
@@ -150,10 +163,13 @@ void update(Ball &b, Player &p1, Player &p2)
       {
         p2.c.y-= 20*d;
       }
+      pos = pos * d;
       color(255,0,0);
       drawPlayers(p1);
       color(0,255,0);
       drawPlayers(p2);
+      color(255,255,255);
+      drawBall(b);
     }
 }
 
@@ -182,9 +198,9 @@ int main(int , char** )
         backGr();
         fillet();
         setKeyRepeatMode(true);
-        drawBall(b);
-        drawPlayers(p1);
-        drawPlayers(p2);
+        //drawBall(b);
+        //drawPlayers(p1);
+        //drawPlayers(p2);
         update(b, p1, p2);
         stop = winDisplay();
     }
